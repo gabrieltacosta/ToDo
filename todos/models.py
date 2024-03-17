@@ -7,6 +7,9 @@ class Todo(models.Model):
     deadline = models.DateField(verbose_name="Data de entrega",null=False, blank=False)
     finished_at = models.DateField(verbose_name="Finalizado em",null=True, blank=True)
 
+    class Meta:
+        ordering = ["deadline"]
+
     def __str__(self):
         return self.title
     
