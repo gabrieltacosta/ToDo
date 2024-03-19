@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView
 from .models import Todo
 
 
@@ -7,3 +8,8 @@ from .models import Todo
 class TodolListView(ListView):
     model = Todo
 
+
+class TodoCreateView(CreateView):
+    model = Todo
+    fields = ["title", "deadline"]
+    success_url = reverse_lazy("todo_list")
