@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block titile %}Cadastro de Usuário{% endblock titile %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <div class="card auth-card">
+            <div class="card-body">
+                <h2 class="card-title text-center">Cadastrar Usuário</h2>
+
+                <form method="POST" action="{% url "cadastro" %}">{% csrf_token %}
+
+                    <input type="text" placeholder="Username..." name="username"><br><br>
+                    <input type="email" placeholder="Email..." name="email"><br><br>
+                    <input type="password" placeholder="Senha..." name="senha"><br><br>
+
+                    <input type="submit" class="btn btn-primary btn-sm" value="Criar">
+                    <a href="{% url "login" %}", class="btn btn-secondary btn-sm">Logar</a>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

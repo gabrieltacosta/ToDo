@@ -3,39 +3,54 @@
 {% block title %}Lista de tarefas{% endblock title %}</title>
 
 {% block content %}
+  <div class="offset-1 col-10 list-div">
+    <h2>Lista de Tarefas</h2>
 
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">id</th>
-        <th scope="col">Título</th>
-        <th scope="col">Criado em</th>
-        <th scope="col">Data de entrega</th>
-        <th scope="col">Finalizado em</th>
-        <th scope="col">Ações</th>
-      </tr>
-    </thead>
-    <tbody>
+    <a href="#" class="btn btn-success"><i class="fas fa-plus"></i> Nova tarefa</a>
+    
+    <div class="col-9 search-div">
+      <form method="GET" id="search-form">
+        <div class="submit-line">
+          <input class="form-control" type="text" id="search" name="search" placeholder="Digite o nome da tarefa para buscar..." value="{{ request.GET.search }}">
+          <button class="submit-lente" type="submit">
+            <i class="fas fa-search" id="search-btn"></i>
+          </button>
+        </div>
+      </form>
+    </div>
 
-      {% for todo in todo_list %}
+    <table class="table">
+      <thead>
         <tr>
-          <th scope="row">{{todo.pk}}</th>
-          <td>{{todo.title}}</td>
-          <td>{{todo.created_at}}</td>
-          <td>{{todo.deadline}}</td>
-          <td>{{todo.finished_at|default:"-"}}</td>
-
-          <td>
-              <a href="{% url "todo_complete" pk=todo.pk %}" class="btn btn-primary btn-sm {% if todo.finished_at %}disabled{% endif %}">Concluir</a>
-              <a href="{% url "todo_update" pk=todo.pk %}" class="btn btn-secondary btn-sm">Editar</a>
-              <a href="{% url "todo_delete" pk=todo.pk %}" class="btn btn-danger btn-sm">excluir</a>
-          </td>
+          <th scope="col">id</th>
+          <th scope="col">Título</th>
+          <th scope="col">Criado em</th>
+          <th scope="col">Data de entrega</th>
+          <th scope="col">Finalizado em</th>
+          <th scope="col">Ações</th>
         </tr>
-      {% endfor %}
+      </thead>
+      <tbody>
 
-    </tbody>
-  </table>
-  <a href="{% url "todo_create" %}" class="btn btn-success btn-sm">Nova tarefa</a>
+        {% for todo in todos %}
+          <tr>
+            <th scope="row">{{todo.pk}}</th>
+            <td>{{todo.title}}</td>
+            <td>{{todo.created_at}}</td>
+            <td>{{todo.deadline}}</td>
+            <td>{{todo.finished_at|default:"-"}}</td>
+
+            <td>
+                <a href="#" class="btn btn-primary btn-sm {% if todo.finished_at %}disabled{% endif %}">Concluir</a>
+                <a href="#" class="btn btn-secondary btn-sm">Editar</a>
+                <a href="#" class="btn btn-danger btn-sm">excluir</a>
+            </td>
+          </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
 
 
+  </div>
 {% endblock content %}

@@ -1,12 +1,20 @@
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
+from django.views.generic import CreateView, UpdateView, DeleteView, View
 from .models import Todo
 
 
 # Create your views here.
-class TodolListView(ListView):
-    model = Todo
+def TodoList(request):
+    todos = Todo.objects.all()
+    return render(request, "todos/todo_list.html", {"todos": todos})
+
+def TodoView(request, id):
+    todo = get_object_or_404(Todo, pk=id)
+    return render(request, "todos/todo.html", {"todo": todo})
+
+#class TodolListView(ListView):
+#    model = Todo
 
 
 class TodoCreateView(CreateView):
