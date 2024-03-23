@@ -5,7 +5,8 @@
 {% block content %}
     <div class="offset-1 col-10 list-div">
         <h2>{{todo.title}}</h2>
-        <p>Descrição da tarefa</p>
+        <p>{{todo.description}}</p>
+        <a href="{% url "todo_list" %}" class="btn btn-secondary btn-sm">Voltar</a>
     </div>
 
 {% endblock content %}

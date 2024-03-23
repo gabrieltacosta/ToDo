@@ -3,13 +3,12 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-    Cadastrar tarefa
+    Editar tarefa
 {% endblock title %}
 
 {% block content %}
     <main class="container">
-        
-        <h2>Cadastrar tarefa</h2>
+        <h2>Editando a tarefa {{todo.title}}.</h2>
 
         <form method="POST">{% csrf_token %}
 

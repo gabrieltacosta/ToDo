@@ -7,10 +7,10 @@
 {% block content %}
     <main class="container">
         <h2>
-            Excluir tarefa
+            Excluir a tarefa <strong>{{todo.title}}</strong>.
         </h2>
-        <p>Realmente deseja excluir a tarefa <strong>{{todo.title}}</strong>?</p>
-        <form method="POST">{% csrf_token %}
+        <p>Realmente deseja excluir a tarefa?</p>
+        <form method="POST" action="{% url "delete" %}">{% csrf_token %}
 
             {{ form|crispy }}
 

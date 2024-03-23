@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect, render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, DeleteView, View
+from django.views.generic import View
 from .models import Todo
+from .forms import TodoForm
 
 
 # Create your views here.
@@ -9,29 +10,44 @@ def TodoList(request):
     todos = Todo.objects.all()
     return render(request, "todos/todo_list.html", {"todos": todos})
 
+
 def TodoView(request, id):
     todo = get_object_or_404(Todo, pk=id)
     return render(request, "todos/todo.html", {"todo": todo})
 
-#class TodolListView(ListView):
-#    model = Todo
+
+def TodoCreate(request):
+    if request.method == "POST":
+        form = TodoForm(request.POST)
+        if form.is_valid():
+            todo = form.save(commit=False)
+            todo.save()
+            return redirect("todo_list")
+    else:
+        form = TodoForm()
+        return render(request, "todos/todo_form.html", {"form": form})
 
 
-class TodoCreateView(CreateView):
-    model = Todo
-    fields = ["title", "deadline"]
-    success_url = reverse_lazy("todo_list")
+def TodoUpdate(request, id):
+    todo = get_object_or_404(Todo, pk=id)
+    form = TodoForm(instance=todo)
+
+    if (request.method == "POST"):
+        form = TodoForm(request.POST, instance=todo)
+
+        if (form.is_valid()):
+            todo.save()
+            return redirect("todo_list")
+        else:
+            return render(request, "todos/todo_update.html", {"form": form, "todo": todo})
+    else:
+        return render(request, "todos/todo_update.html", {"form": form, "todo": todo})
 
 
-class TodoUpdateView(UpdateView):
-    model = Todo
-    fields = ["title", "deadline", "finished_at"]
-    success_url = reverse_lazy("todo_list")
-
-
-class TodoDeleteView(DeleteView):
-    model = Todo
-    success_url = reverse_lazy("todo_list")
+def TodoDelete(request, id):
+    todo = get_object_or_404(Todo, pk=id)
+    todo.delete()
+    return redirect("todo_list")
 
 
 class TodoCompleteView(View):

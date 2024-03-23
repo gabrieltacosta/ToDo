@@ -58,6 +58,10 @@
     margin: 30px auto;
 }
 
+a {
+    text-decoration: none;
+}
+
 /* Footer */
 footer {
     background-color: #333;
