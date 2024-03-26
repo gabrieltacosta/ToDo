@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import View
 from .models import Todo
-from .forms import TodoForm
+from .forms import TodoForm, TodoFormDelete
 
 
 # Create your views here.
@@ -42,6 +42,12 @@ def TodoUpdate(request, id):
             return render(request, "todos/todo_update.html", {"form": form, "todo": todo})
     else:
         return render(request, "todos/todo_update.html", {"form": form, "todo": todo})
+
+
+def TodoDeleteConfirm(request, id):
+    todo = get_object_or_404(Todo, pk=id)
+    form = TodoFormDelete(instance=todo)
+    return render(request, "todos/Todo_confirm_delete.html", {"form": form, "todo": todo})
 
 
 def TodoDelete(request, id):

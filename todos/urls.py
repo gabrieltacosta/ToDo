@@ -4,6 +4,7 @@ from todos.views import (
     TodoView,
     TodoCreate,
     TodoUpdate,
+    TodoDeleteConfirm,
     TodoDelete,
     TodoCompleteView,
 )
@@ -14,6 +15,7 @@ urlpatterns = [
     path("todos/<int:id>", TodoView, name="todo_view"),
     path("create/", TodoCreate, name="todo_create"),
     path("update/<int:id>", TodoUpdate, name="todo_update"),
+    path("delete_confirm/<int:id>", TodoDeleteConfirm, name="todo_delete_confirm"),
     path("delete/<int:id>", TodoDelete, name="todo_delete"),
     path("complete/<int:pk>", TodoCompleteView.as_view(), name="todo_complete"),
 ]
