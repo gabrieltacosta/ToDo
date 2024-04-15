@@ -1,13 +1,17 @@
 from django.shortcuts import get_object_or_404, redirect, render, redirect
+from django.core.paginator import Paginator
 from django.urls import reverse_lazy
 from django.views.generic import View
 from .models import Todo
-from .forms import TodoForm, TodoFormDelete
+from .forms import TodoForm #, TodoFormDelete
 
 
 # Create your views here.
 def TodoList(request):
-    todos = Todo.objects.all()
+    todos_list = Todo.objects.all()
+    paginator = Paginator(todos_list, 5)
+    page = request.GET.get("page")
+    todos = paginator.get_page(page)
     return render(request, "todos/todo_list.html", {"todos": todos})
 
 
@@ -44,10 +48,10 @@ def TodoUpdate(request, id):
         return render(request, "todos/todo_update.html", {"form": form, "todo": todo})
 
 
-def TodoDeleteConfirm(request, id):
-    todo = get_object_or_404(Todo, pk=id)
-    form = TodoFormDelete(instance=todo)
-    return render(request, "todos/Todo_confirm_delete.html", {"form": form, "todo": todo})
+#def TodoDeleteConfirm(request, id):
+#    todo = get_object_or_404(Todo, pk=id)
+#    form = TodoFormDelete(instance=todo)
+#    return render(request, "todos/Todo_confirm_delete.html", {"form": form, "todo": todo})
 
 
 def TodoDelete(request, id):

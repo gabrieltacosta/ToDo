@@ -22,7 +22,7 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">id</th>
+            <th scope="col">ID</th>
             <th scope="col">Título</th>
             <th scope="col">Criado em</th>
             <th scope="col">Data de entrega</th>
@@ -41,7 +41,7 @@
               <td>
                   <a href="{% url "todo_complete" todo.pk %}" class="btn btn-primary btn-sm {% if todo.finished_at %}disabled{% endif %}">Concluir</a>
                   <a href="{% url "todo_update" todo.pk %}" class="btn btn-secondary btn-sm">Editar</a>
-                  <a href="{% url "todo_delete_confirm" todo.pk%}" class="btn btn-danger btn-sm">excluir</a>
+                  <a href="{% url "todo_delete" todo.pk%}" class="btn btn-danger btn-sm delete-btn">excluir</a>
               </td>
             </tr>
           {% endfor %}
@@ -50,5 +50,18 @@
     {% else %}
       <p>Não há tarefas cadastrada.</p>
     {% endif %}
+    <div class="pagination">
+      <span class="step-links">
+        {% if todos.has_previous %}
+          <a href="?page={{ todos.previous_page_number }}"><i class="fas fa-arrow-left"></i></a>
+        {% endif %}
+        <span class="current">
+          {{ todos.number }} de {{ todos.paginator.num_pages }}
+        </span>
+        {% if todos.has_next %}
+          <a href="?page={{ todos.next_page_number }}"><i class="fas fa-arrow-right"></i></a>
+        {% endif %}
+      </span>
+    </div>
   </div>
 {% endblock content %}
